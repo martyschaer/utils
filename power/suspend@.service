@@ -1,0 +1,14 @@
+[Unit]
+Description=User suspend actions
+Before=sleep.target
+
+[Service]
+User=marius
+Type=forking
+Environment=DISPLAY=:0
+Environment=HOME=/home/marius/
+Environment=XAUTHORITY=/home/marius/.Xauthority
+ExecStart=/home/marius/software/utils/power/lock.sh
+
+[Install]
+WantedBy=sleep.target

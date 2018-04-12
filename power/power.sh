@@ -4,6 +4,6 @@
 echo -e "-\nsuspend\npoweroff\nreboot" | dmenu | (
   read in;
   if [[ "$in" != "-" && "$in" != "" ]] ; then
-    $HOME/software/utils/power/lock.sh && systemctl $in;
+    systemctl "$in"
   fi
 )
