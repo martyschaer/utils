@@ -21,7 +21,7 @@ if (( $# == 1 )); then
 fi
 
 updates=$(checkupdates)
-pacman_update_count=$($updates | wc -l)
+pacman_update_count=$(echo "$updates" | sed '/^\s*$/d' | wc -l)
 
 for repo in $(ls $pa); do
   path=$pa$repo
