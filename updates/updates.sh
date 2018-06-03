@@ -21,15 +21,10 @@ if (( $# == 1 )); then
 fi
 
 updates=$(checkupdates)
+cower=$(cower -u)
 pacman_update_count=$(echo "$updates" | sed '/^\s*$/d' | wc -l)
-
-for repo in $(ls $pa); do
-  path=$pa$repo
-  fetchc=$(cd $path && git fetch | wc -l)
-  if (( $fetchc > 0 )); then
-    build_update_count=$build_update_count+1
-  fi
-done
+aur_update_count=$(echo "$cower" | wc -l)
+aur_update_count=$(($aur_update_count-1))
 
 if [[ $verb -gt 0 ]]; then
   if [[ $pacman_update_count -le 0 ]]; then
@@ -39,10 +34,11 @@ if [[ $verb -gt 0 ]]; then
     echo $updates
   fi
   if [[ $build_update_count -le 0 ]]; then
-    echo "No manual build updates"
+    echo "No AUR updates"
   else
-    echo "Manual Updates:"
+    echo "AUR Updates:"
+    echo $cower
   fi
-elif [[ $pacman_update_count -gt 0 || $build_update_count -gt 0 ]]; then
-  echo "$pacman_update_count  $build_update_count"
+elif [[ $pacman_update_count -gt 0 || $aur_update_count -gt 0 ]]; then
+  echo "$pacman_update_count  $aur_update_count"
 fi
